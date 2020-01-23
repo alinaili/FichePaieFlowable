@@ -1,0 +1,24 @@
+<div class="" [hidden]="!showLoading" style="margin-top: 200px;">
+
+    <img src="../../../assets/images/64x64.gif" class="mx-auto d-block" alt="">
+</div>
+
+<div class="media" [hidden]="showLoading">
+    <img src="../../../assets/images/demande.png" class="align-self-start mr-3" style="width:50px">
+    <div class="media-body">
+        <h4>Details Demande</h4>
+        <h5>Nom et Prenom : <small><i>{{valuePrenom}} {{valueNom}}</i></small></h5>
+        <h5>Code Cnrps : <small><i>{{valueCodecnrps}}</i></small></h5>
+        <h5>Structure : <small><i>{{valueStructure}}</i></small></h5>
+        <h5>Email : <small><i> {{valueEmail}}</i></small></h5>
+        <h5>La langue du document demandee : <small><i>{{valueLangue}}</i></small></h5>
+        <h5>Annee : <small><i>{{valueAnnee}}</i></small></h5>
+        <h5>Mois : <small><i>{{valueMois}}</i></small></h5>
+        <h5>Remarque : <small><i>{{valueRemarque}}</i></small></h5>
+        <!-- <button class="btn btn-sm btn-warning" routerLink="/users">Retour</button> -->
+    </div>
+    <div>
+        <br />
+        <button class="btn btn-lg btn-warning" routerLink="/users">Retour</button>
+    </div>
+</div>

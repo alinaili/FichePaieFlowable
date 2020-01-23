@@ -1,0 +1,205 @@
+<div class="mx-auto d-block">
+    <!-- <h3 class="display-4 d-none d-sm-block text-center">
+                Gestion des Demandes des documents Administrtif
+              </h3> -->
+    <p class="lead d-none d-sm-block"></p>
+
+    <!-- <div class="alert alert-warning" role="" id="">
+                <strong>Materiels Informatiques</strong>
+              </div> -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-sm-4 py-5">
+            <div class="card bg-success text-white h-100">
+                <div class="card-body bg-success">
+                    <div class="rotate">
+                        <i class="fa fa-user fa-3x"></i>
+                    </div>
+                    <h6 class="text-uppercase">Taches en cours"</h6>
+                    <h4 class="display-4">{{nbrdemEncours}} </h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-4 py-5">
+            <div class="card text-white bg-danger h-100">
+                <div class="card-body bg-danger">
+                    <div class="rotate">
+                        <i class="fa fa-list fa-3x"></i>
+                    </div>
+                    <h6 class="text-uppercase">Taches Traitées</h6>
+                    <h4 class="display-4">{{nbrdemTraite}} </h4>
+                </div>
+            </div>
+        </div>
+        <div [hidden]="!useringroupresp" class="col-xl-3 col-sm-4 py-5">
+            <div class="card text-white bg-info h-100">
+                <div class="card-body bg-info">
+                    <div class="rotate">
+                        <i class="fa fa-history fa-4x"></i>
+                    </div>
+                    <h6 class="text-uppercase">Tous les demandes</h6>
+                    <h1 class="display-4">{{nbrhistoricdem}} </h1>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="col-xl-3 col-sm-6 py-2">
+                              <div class="card text-white bg-warning h-100">
+                                  <div class="card-body">
+                                      <div class="rotate">
+                                          <i class="fa fa-share fa-4x"></i>
+                                      </div>
+                                      <h6 class="text-uppercase">Shares</h6>
+                                      <h1 class="display-4">36</h1>
+                                  </div>
+                              </div>
+                          </div> -->
+    </div>
+</div>
+
+<!-- utilisation de tabs de angular material pour affiches demande encours et dem traité -->
+<mat-tab-group animationDuration="0ms" (selectedTabChange)="tabChanged($event)" [selectedIndex]="homelisttrait">
+    <!-- liste des demandes -->
+    <mat-tab label="Taches en cours">
+        <div class="card">
+            <div class="imgnodata" *ngIf="(tasks | json) === '{}' || (tasks | json) === '[]'">
+                <img src="../../../assets/images/nodata.jpg" class="mx-auto d-block" alt="" />
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-striped table-sm" *ngIf="(tasks | json) != '{}' && (tasks | json) != '[]'">
+                    <thead>
+                        <tr>
+                            <th class="d-none">ID</th>
+                            <th>NOM</th>
+                            <th>Date Creation</th>
+                            <!-- <th>FormKey</th> -->
+                            <th>Demandeur</th>
+                            <th>Email Demandeur</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let task of tasks">
+                            <td class="d-none">{{ task.id }}</td>
+                            <td>{{ task.processDefinitionName }}</td>
+                            <td>{{ task.created | date: "dd-MM-yyyy HH:mm " }}</td>
+                            <!-- <td>{{task.formKey}}</td> -->
+                            <td>{{ task.infofullName }}</td>
+                            <td>{{ task.infoemail }}</td>
+                            <td>
+                                <!-- <button class="btn btn-sm btn-danger" (click)="onDeletetask(task)">delete</button> -->
+                                <button class="btn btn-sm btn-info mx-auto d-block" (click)="onGetdetTask(task.id)">
+                  Details
+                </button>
+
+                                <!-- <button class="btn btn-sm btn-danger" (click)="onDeletetask(task)">delete</button> -->
+                                <!-- <button class="btn btn-sm btn-warning" [disabled]="task.assignee"
+                                    >Soutenir</button> -->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </mat-tab>
+    <!-- Demandes Traités -->
+    <mat-tab label="Taches Traitées">
+        <div class="card">
+            <div class="imgnodata" *ngIf="
+          (demandeTerminer | json) === '{}' || (demandeTerminer | json) === '[]'
+        ">
+                <img src="../../../assets/images/nodata.jpg" class="mx-auto d-block" alt="" />
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-striped table-sm" *ngIf="
+            (demandeTerminer | json) != '{}' && (demandeTerminer | json) != '[]'
+          ">
+                    <thead>
+                        <tr>
+                            <th class="d-none">ID</th>
+                            <th>NOM</th>
+                            <th>Demandeur</th>
+                            <th>Email Demandeur</th>
+                            <th>Date Creation</th>
+                            <th>Date Traitement</th>
+                            <th>Etat demande</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let demtrm of demandeTerminer">
+                            <td class="d-none">{{ demtrm.id }}</td>
+                            <td>{{ demtrm.processDefinitionKey }}</td>
+                            <td>{{ demtrm.fullName }}</td>
+                            <td>{{ demtrm.email }}</td>
+                            <!-- <td>{{demtrm.created | date:'dd-MM-yyyy HH:mm ' }}</td> -->
+                            <td>{{ demtrm.created | date: "dd-MM-yyyy HH:mm " }}</td>
+                            <td>
+
+                                {{ demtrm.endDate | date: "dd-MM-yyyy HH:mm " }}</td>
+                            <td *ngIf="demtrm.datevalidourefus===null" style="color: red !important;">
+                                refusée
+                                <button class="btn" (click)="onGetdetTaskrefuser(demtrm.id)">
+                                        <i class="fa fa-question-circle" style="font-size:25px;color:red"></i>
+                                </button>
+
+                            </td>
+                            <td *ngIf="demtrm.datevalidourefus!=null" style="color: blue !important;">
+                                validée
+                                <button class="btn" (click)="onGetdetTaskvalider(demtrm.id)">
+                                     <i class="fa fa-info-circle" style="font-size:25px;color:rgb(132, 121, 196)"></i>
+                                </button>
+                                <!-- <button class="btn" (click)="onGetdetTaskvalider(demtrm.id)">
+                                    <i style="font-size: 25px; color: red; padding: 3px;" class="fa fa-file-pdf-o"></i>
+                                </button> -->
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- <ul class="nav nav-pills justify-content-center " *ngIf="pages">
+                    <li class="nav-item aClickPagination" *ngFor="let p of pages; let i = index">
+                        <a class="nav-link" [ngClass]="{ active: i == currentPage }" (click)="onPagetaskNext(i)">{{ i }}</a
+                        >
+                      </li>
+                  </ul> -->
+            </div>
+        </div>
+    </mat-tab>
+    <!--historique de tous les demandes-->
+    <mat-tab *ngIf="useringroupresp" label="Tous les demandes">
+        <div class="card">
+            <div class="imgnodata" *ngIf="
+    (historic | json) === '{}' || (historic | json) === '[]'
+  ">
+                <img src="../../../assets/images/nodata.jpg" class="mx-auto d-block" alt="" />
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-striped table-sm" *ngIf="
+      (historic | json) != '{}' && (historic | json) != '[]'
+    ">
+                    <thead>
+                        <tr>
+                            <th class="d-none">ID</th>
+                            <th>NOM</th>
+                            <th>Demandeur</th>
+                            <th>Email Demandeur</th>
+                            <th>Date Creation</th>
+                            <th>Date Validation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let histori of historic">
+                            <td class="d-none">{{ histori.id }}</td>
+                            <td>{{ histori.name }}</td>
+                            <td>{{ histori.firstName }} {{ histori.lastName }}</td>
+                            <td>{{ histori.email }}</td>
+                            <!-- <td>{{demtrm.created | date:'dd-MM-yyyy HH:mm ' }}</td> -->
+                            <td>{{ histori.startTime | date: "dd-MM-yyyy HH:mm " }}</td>
+                            <!-- <td>{{ histori.endTime | date: "dd-MM-yyyy HH:mm " }}</td> -->
+                            <td>
+                                <p *ngIf="histori.endTime === null" style="color: red;">Demande refusée</p> {{ histori.endTime | date: "dd-MM-yyyy HH:mm " }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </mat-tab>
+</mat-tab-group>

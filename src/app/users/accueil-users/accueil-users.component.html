@@ -1,0 +1,149 @@
+<div class="row">
+    <div class="col-sm-3">
+        <button type="button" class="btn btn-primary btn-sm btn-rounded btn-block" routerLink="/demande">
+      Demander Un Document
+    </button>
+        <button [hidden]="!useringrouadmfinc" type="button" class="btn btn-outline-warning btn-sm btn-block" routerLink="/assistants">
+      Traiter Demande
+    </button>
+    </div>
+</div>
+<!-- utilisation de tabs de angular material pour affiches demande encours et dem traité -->
+<mat-tab-group animationDuration="0ms" (selectedTabChange)="tabChanged($event)" [selectedIndex]="rectifHome">
+    <!-- liste des demandes -->
+    <mat-tab label="Demandes en Cours">
+        <div class="loading" [hidden]="!showLoading">
+            <img src="../../../assets/images/64x64.gif" class="mx-auto d-block" alt="" />
+        </div>
+        <div class="" [hidden]="showLoading">
+            <div class="imgnodata" *ngIf="(tasks | json) === '{}' || (tasks | json) === '[]'">
+                <img src="../../../assets/images/nodata.jpg" class="mx-auto d-block" alt="" />
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-striped table-sm" *ngIf="(tasks | json) != '{}' && (tasks | json) != '[]'">
+                    <thead>
+                        <tr>
+                            <!-- <th>ID</th> -->
+                            <th>DESCRIPTION</th>
+                            <!-- <th>Demandeur</th> -->
+                            <th>Date Creation</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let task of tasks">
+                            <!-- <td>{{task.id}}</td> -->
+                            <td>{{ task.name }}</td>
+                            <!-- <td>{{task.startUserId}}</td> -->
+                            <td>{{ task.started | date: "dd-MM-yyyy HH:mm " }}</td>
+                            <td class="text-center">
+                                <button class="btn btn-sm btn-info" (click)="onGetdetDemande(task.id)"> Details</button>
+                                <button class="btn btn-sm btn-danger" (click)="openDialog(task.id)">Annuler</button> </td>
+
+                            <!-- <td>{{task.startTime | date:'dd-MM-yyyy HH:mm '}}</td> -->
+                            <!-- <td>{{task.completed}}</td> -->
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- <ul class="nav nav-pills justify-content-center " *ngIf="pages">
+                    <li class="nav-item aClickPagination" *ngFor="let p of pages; let i=index">
+                        <a class="nav-link" [ngClass]="{'active': i==currentPage}" (click)="onPagetaskNext(i)">{{i}}</a>
+                    </li>
+                </ul> -->
+            </div>
+        </div>
+    </mat-tab>
+    <!-- Demandes Traités -->
+    <mat-tab label="Demandes Terminées et Validées">
+        <div class="" [hidden]="!showLoading" style="margin-top: 200px;">
+            <img src="../../../assets/images/64x64.gif" class="mx-auto d-block" alt="" />
+        </div>
+        <!--affivhé si loadind -->
+        <div class="loadingTab" [hidden]="!showLoadingPDF">
+
+            <img src="../../../../assets/images/loading-hourglass.gif" class="mx-auto d-block" alt="">
+        </div>
+        <div class="" [hidden]="showLoading" [hidden]="showLoadingPDF">
+            <!-- <div class="card-header bg-warning " > /div> -->
+            <div class="imgnodata" *ngIf="(historicmodifier | json) === '{}' || (historicmodifier | json) === '[]'">
+                <img src="../../../assets/images/nodata.jpg" class="mx-auto d-block" alt="" />
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-striped table-sm" *ngIf="(historicmodifier | json) != '{}' && (historicmodifier | json) != '[]'">
+                    <thead>
+                        <tr>
+                            <th class="d-none">ID</th>
+                            <th>NOM</th>
+                            <th>Créer le</th>
+                            <!-- <th>FormKey</th> -->
+                            <th>Terminer le</th>
+                            <th>Generer PDF</th>
+                            <!-- <th>Demandeur </th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let process of historicmodifier">
+                            <td class="d-none">{{ process.id }}</td>
+                            <td>{{ process.nameProcess }}</td>
+                            <td>{{ process.started | date: "dd-MM-yyyy HH:mm " }}</td>
+                            <!-- <td>{{process.started | date:'dd-MM-yyyy HH:mm ' }}</td> -->
+                            <!-- <td>{{task.formKey}}</td> -->
+                            <td>{{ process.ended | date: "dd-MM-yyyy HH:mm "}}</td>
+                            <td>
+                                <button class="btn mx-auto d-block" style="font-size: 23px; color: red; padding: 3px;" (click)="onGenerePDF(process.id)">
+                                    <i class="fa fa-file-pdf-o"></i></button>
+                            </td>
+                            <!-- <td>{{process.startedBy.firstName}} {{process.startedBy.fullName}}</td> -->
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- <ul class="nav nav-pills justify-content-center " *ngIf="pages">
+                    <li class="nav-item aClickPagination" *ngFor="let p of pages; let i=index">
+                        <a class="nav-link" [ngClass]="{'active': i==currentPage}" (click)="onPagetaskNext(i)">{{i}}</a>
+                    </li>
+                </ul> -->
+            </div>
+        </div>
+    </mat-tab>
+    <!-- Demande Rectifier -->
+    <mat-tab label="Demande à Rectifier">
+        <div class="loading" [hidden]="!showLoading">
+            <img src="../../../assets/images/64x64.gif" class="mx-auto d-block" alt="" />
+        </div>
+        <div class="" [hidden]="showLoading">
+            <div class="imgnodata" *ngIf="
+          (tacheRectifiers | json) === '{}' || (tacheRectifiers | json) === '[]' ">
+                <img src="../../../assets/images/nodata.jpg" class="mx-auto d-block noDataimg" alt="" />
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-striped table-sm" *ngIf="
+            (tacheRectifiers | json) != '{}' && (tacheRectifiers | json) != '[]' ">
+                    <thead>
+                        <tr>
+                            <th class="d-none">ID</th>
+                            <th>NOM</th>
+                            <th>Créer le</th>
+                            <!-- <th>FormKey</th> -->
+                            <th class="text-center">Actions</th>
+                            <!-- <th>Demandeur </th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let tachrect of tacheRectifiers">
+                            <td>{{ tachrect.name }}</td>
+                            <td>{{ tachrect.created | date: "dd-MM-yyyy HH:mm " }}</td>
+                            <td>
+                                <button class="btn btn-sm btn-info mx-auto d-block" (click)="onGetIdTachRectif(tachrect.id)">Details</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- <ul class="nav nav-pills justify-content-center " *ngIf="pages">
+                    <li class="nav-item aClickPagination" *ngFor="let p of pages; let i=index">
+                        <a class="nav-link" [ngClass]="{'active': i==currentPage}" (click)="onPagetaskNext(i)">{{i}}</a>
+                    </li>
+                </ul> -->
+            </div>
+        </div>
+    </mat-tab>
+</mat-tab-group>

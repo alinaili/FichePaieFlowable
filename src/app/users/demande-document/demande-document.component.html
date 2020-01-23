@@ -1,0 +1,179 @@
+<div class="col-lg-6 col-sm-10 col-xs-6 offset-3">
+    <div class="loading" [hidden]="!showLoading">
+
+        <img src="../../../assets/images/64x64.gif" class="mx-auto d-block" alt="">
+    </div>
+    <div class="card" [hidden]="showLoading">
+        <div class="card-header bg-warning text-center">
+            Demande Fiche de Paie
+        </div>
+        <div class="card-body">
+            <form [formGroup]="demandeDocument" (ngSubmit)="onAjoutDemande()">
+
+                <div class="form-group">
+                    <label for="">Code CNRPS</label>
+                    <input disabled type="text" class="form-control" name="" id="codecnrps" formControlName="codecnrps" [ngClass]="{ 'is-invalid': submitted && f.codecnrps.errors }">
+                    <div *ngIf="submitted && f.codecnrps.errors" class="invalid-feedback">
+                        <div *ngIf="f.codecnrps.errors.required">Entrer un code CNRPS</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Prenom</label>
+                    <input disabled type="text" class="form-control" name="" id="prenom" formControlName="prenom" [ngClass]="{ 'is-invalid': submitted && f.prenom.errors }">
+                    <div *ngIf="submitted && f.prenom.errors" class="invalid-feedback">
+                        <div *ngIf="f.prenom.errors.required">Donner votre Prenom</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Nom</label>
+                    <input disabled type="text" class="form-control" name="" id="nom" formControlName="nom" [ngClass]="{ 'is-invalid': submitted && f.nom.errors }">
+                    <div *ngIf="submitted && f.nom.errors" class="invalid-feedback">
+                        <div *ngIf="f.nom.errors.required">Donner votre Nom</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="">@Email</label>
+                    <input disabled type="email" class="form-control" name="" id="email" aria-describedby="emailHelpId" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+                    <!-- <small id="emailHelpId" class="form-text text-muted">Help text</small> -->
+                    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                        <!-- <div *ngIf="f.email.required">Donner votre Email</div>
+                        <div *ngIf="f.email.email">Donner un Email valide</div> -->
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Structure</label>
+                    <input type="text" class="form-control" name="" id="structure" formControlName="structure" [ngClass]="{ 'is-invalid': submitted && f.structure.errors }">
+                    <div *ngIf="submitted && f.structure.errors" class="invalid-feedback">
+                        <div *ngIf="f.structure.errors.required">Donner votre Structure</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="">La langue du document demandee</label>
+                    <select class="form-control" name="lalanguedudocumentdemandee" id="lalanguedudocumentdemandee" formControlName="lalanguedudocumentdemandee">
+                        <option value="Arabe">Arabe</option>
+                        <option value="Francais">Francais</option>                        
+                    </select>
+                </div>
+
+                <!--  --
+                <div class="form-group">
+                    <label for="">Selectionner Annee et Mois</label>
+                    <div class="input-group">
+                        <input class="form-control" [(ngModel)]="madate" [bsConfig]="bsConfig" #dp="bsDatepicker"
+                            bsDatepicker [ngClass]="{ 'is-invalid': submitted && f.date.errors }">
+
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()"
+                                type="button"></button>
+                        </div>
+                        <div *ngIf="submitted && f.date.errors" class="invalid-feedback">
+                            <div *ngIf="f.date.errors.required">Select une Date</div>
+                        </div>
+                    </div>
+                </div>
+                <p>{{madate|json}}</p>
+                <!--  -->
+
+                <div class="form-group">
+                    <label for="">Selectionner Annee et Mois</label>
+                    <div class="input-group">
+                        <input class="form-control" id="date" placeholder="MM/YYYY" formControlName="date" [ngClass]="{ 'is-invalid': submitted && f.date.errors }" [bsConfig]="bsConfig" bsDatepicker #dp="bsDatepicker" (bsValueChange)="onValueChange($event)">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
+                        </div>
+                        <div *ngIf="submitted && f.date.errors" class="invalid-feedback">
+                            <div *ngIf="f.date.errors.required">Select une Date</div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+                <!--  <pre>Model: {{ madate | json }}</pre> -->
+
+
+                <!--  <div class="form-group yearonly">
+                    <label for="">Selectionner Annee et Mois</label>
+                    <div class="input-group">
+                        <input class="form-control" id="date" placeholder="yyyy-mm" formControlName="date"
+                            [ngClass]="{ 'is-invalid': submitted && f.date.errors }" name="dp" [(ngModel)]="madate"
+                            bsDatepicker #cal="bsDatepicker" [bsConfig]="{dateInputFormat: 'MM/YYYY'}"
+                            (onShown)="onOpenCalendar($event)">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary calendar" (click)="cal.toggle()"
+                                type="button"></button>
+                        </div>
+                        <div *ngIf="submitted && f.date.errors" class="invalid-feedback">
+                            <div *ngIf="f.date.errors.required">Select une Date</div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                {{madate}} -->
+
+                <!-- <div class="form-group">
+                    <label for="">Date de Document</label>
+                    <div class="input-group">
+                        <input class="form-control" id="date" placeholder="yyyy-mm" formControlName="date"
+                            [ngClass]="{ 'is-invalid': submitted && f.date.errors }" name="dp" [(ngModel)]="model"
+                            ngbDatepicker #d="ngbDatepicker" [outsideDays]="outsideDays">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary calendar" (click)="d.toggle()"
+                                type="button"></button>
+                        </div>
+                        <div *ngIf="submitted && f.date.errors" class="invalid-feedback">
+                            <div *ngIf="f.date.errors.required">Select une Date</div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <pre>Model: {{ model | json }}</pre> -->
+
+
+
+
+                <!--  <div class="form-group">
+                    <label for="">Date de Document</label>
+                    <!-- <input type="month" name="" id="date" class="form-control" aria-describedby="helpId"
+                        formControlName="date" [ngClass]="{ 'is-invalid': submitted && f.date.errors }"> --
+
+                    <input class="form-control" matInput [matDatepicker]="picker" placeholder="Choose a date">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+
+                    <!-- <small id="helpId" class="text-muted">Help text</small> --
+                    <div *ngIf="submitted && f.date.errors" class="invalid-feedback">
+                        <div *ngIf="f.date.errors.required">Select une Date</div>
+                    </div>
+                </div> -->
+
+                <!-- <div class="form-group">
+                    <label for="">Remarque</label>
+                    <input type="text" class="form-control" name="" id="remarque" aria-describedby="helpId"
+                        formControlName="remarque" [ngClass]="{ 'is-invalid': submitted && f.remarque.errors }">
+                    <small id="helpId" class="form-text text-muted">Merci d'introduire une remarque si
+                        necessaire</small>
+                </div> -->
+
+                <div class="form-group">
+                    <label for="comment">Remarque:</label>
+                    <textarea class="form-control" rows="5" id="remarque" formControlName="remarque" aria-describedby="helpId"></textarea>
+                    <small id="helpId" class="form-text text-muted">Merci d'introduire une remarque si
+                        necessaire</small>
+                </div>
+
+                <button class="btn btn-primary" [disabled]="demandeDocument.invalid">Enregistrer</button>
+                <button class="btn btn-danger float-right" routerLink="/users">  Annuler  </button>
+            </form>
+        </div>
+        <div class="card-footer text-muted text-center bg-light">
+
+        </div>
+    </div>
+</div>
+
+<!-- desactiver button enregistrer si donnee non saisie avec [disabled]="demandeDocument.invalid" -->

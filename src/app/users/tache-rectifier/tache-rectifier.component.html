@@ -1,0 +1,82 @@
+<div class="col-lg-6 col-sm-10 col-xs-6 offset-3">
+    <div class="card">
+        <div class="card-header bg-warning text-center">
+            Correction de Demande Fiche de Paie
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="">Code CNRPS</label>
+                    <input disabled type="text" class="form-control" name="value_codecnrps" id="" [(ngModel)]="valueCodecnrps">
+                </div>
+
+                <div class="form-group">
+                    <label for="">Prenom</label>
+                    <input disabled type="text" class="form-control" name="value_prenom" id="prenom" [(ngModel)]="valuePrenom">
+                </div>
+
+                <div class="form-group">
+                    <label for="">Nom</label>
+                    <input disabled type="text" class="form-control" name="value_nom" id="nom" [(ngModel)]="valueNom">
+                </div>
+
+                <div class="form-group">
+                    <label for="">Structure</label>
+                    <input disabled type="text" class="form-control" name="value_structure" [(ngModel)]="valueStructure">
+                </div>
+
+                <div class="form-group">
+                    <label for="">@Email</label>
+                    <input disabled type="email" class="form-control" name="value_email" [(ngModel)]="valueEmail">
+                </div>
+
+                <div class="form-group">
+                    <label for="">La langue du document demandee</label>
+                    <select class="form-control" name="value_lalanguedudocumentdemandee" [(ngModel)]="valueLangue">
+                        <option [value]="langue" *ngFor="let langue of langues"> {{langue}}
+                        </option>
+                    </select>
+                </div>
+
+                <!-- <div class="form-group">
+                    <label for="">Annee</label>
+                    <input disabled type="text" class="form-control" name="annee" [(ngModel)]="value_annee">
+                </div> -->
+
+                <!-- <div class="form-group">
+                    <label for="">Mois</label>
+                    <input disabled type="text" class="form-control" name="mois" [(ngModel)]="value_mois">
+                </div> -->
+
+                <div class="form-group">
+                    <label for="">Annee et Mois</label>
+                    <div class="input-group">
+                        <input class="form-control" id="date" placeholder="MM/YYYY" [ngClass]="{ 'is-invalid': submitted && f.date.errors }" [bsConfig]="bsConfig" bsDatepicker #dp="bsDatepicker" (bsValueChange)="onValueChange($event)" [(bsValue)]="bsValue" value="{{ bsValue | date:'yyyy-MM'}}">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button"></button>
+                        </div>
+                        <!-- <div *ngIf="submitted && f.date.errors" class="invalid-feedback">
+                            <div *ngIf="f.date.errors.required">Select une Date</div>
+                        </div> -->
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="comment">Remarque:</label>
+                    <textarea disabled class="form-control" rows="2" name="remarque" [(ngModel)]="valueRemarque"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="comment">Commentaire DAF:</label>
+                    <textarea disabled class="form-control" rows="2" name="commentaire" [(ngModel)]="valueCommentaire"></textarea>
+                </div>
+
+                <button class="btn btn-primary" (click)="onRectifierDemande()">Envoyer</button>
+                <button class="btn btn-danger float-right" (click)="onGetAccueilUser()">Annuler</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- desactiver button enregistrer si donnee non saisie avec [disabled]="demandeDocument.invalid" -->

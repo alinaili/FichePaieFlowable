@@ -1,0 +1,35 @@
+<!-- Detail Taches Traitée avec Fromulaire -->
+
+<div class="media">
+    <img src="../../../../assets/images/avatar.png" class="align-self-start mr-3" style="width:50px">
+    <div class="media-body">
+        <h4>Details Demande</h4>
+        <!-- <h5>Crée le {{value_created | date:'dd-MM-yyyy HH:mm '}} </h5> -->
+        <h5>Demandeur : <small><i>{{valueNom}} -- {{valuePrenom}}</i></small></h5>
+        <h5>Code Cnrps : <small><i>{{valueCodecnrps}}</i></small></h5>
+        <h5>Structure : <small><i>{{valueStructure}}</i></small></h5>
+        <h5>Email : <small><i> {{valueEmail}}</i></small></h5>
+        <h5>La langue du document demandee : <small><i>{{valueLangue}}</i></small></h5>
+        <h5>Annee : <small><i>{{valueAnnee}}</i></small></h5>
+        <h5>Mois : <small><i>{{valueMois}}</i></small></h5>
+        <h5>Remarque : <small><i>{{valueRemarque}}</i></small></h5>
+        <h5 style="color: red !important;">Commentaire DAAF : <small><i>{{valueCommentaire}}</i></small></h5>
+
+    </div>
+
+    <div>
+        <div class="form-group" *ngIf="refuser">
+            <img src="../../../../assets/images/rejectdem128.png">
+        </div>
+        <div class="form-group" *ngIf="valider">
+            <img src="../../../../assets/images/validdem128.png">
+        </div>
+        <div class="text-center">
+            <button class="btn btn-md btn-warning" (click)="onGetAccueillistesterm()">Retour</button>
+            <!-- <button class="btn btn-sm btn-primary" (click)='onValideDemande()'>Valider</button>
+            <button class="btn btn-sm btn-danger" (click)="onRefuseDemande()">Refuser</button> -->
+            <!-- <button class="btn btn-sm btn-primary" (click)="onGenerePDF()">Valider</button> -->
+        </div>
+
+    </div>
+</div>
